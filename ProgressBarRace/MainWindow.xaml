@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProgressBarRace"
         mc:Ignorable="d"
-        Title="MainWindow" Height="360" Width="800">
+        Title="Race of Random" Height="360" Width="800">
   <Grid>
     <TextBlock HorizontalAlignment="Left" Margin="163,61,0,0" Text="The Race of Random Progress Bar" TextWrapping="Wrap" VerticalAlignment="Top" Width="472" TextAlignment="Center" FontSize="20"/>
 
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="132,150,0,0" VerticalAlignment="Top" Width="140" Foreground="#FF06B07A" Background="WhiteSmoke"/>
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="132,176,0,0" VerticalAlignment="Top" Width="140" Foreground="#FF06B07A" Background="WhiteSmoke"/>
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="132,218,0,0" VerticalAlignment="Top" Width="140" Foreground="#FFB07A06" Background="WhiteSmoke"/>
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="132,243,0,0" VerticalAlignment="Top" Width="140" Foreground="#FFB07A06" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar111" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="132,150,0,0" VerticalAlignment="Top" Width="140" Foreground="#FF06B07A" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar112" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="132,176,0,0" VerticalAlignment="Top" Width="140" Foreground="#FF06B07A" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar121" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="132,218,0,0" VerticalAlignment="Top" Width="140" Foreground="#FFB07A06" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar122" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="132,243,0,0" VerticalAlignment="Top" Width="140" Foreground="#FFB07A06" Background="WhiteSmoke"/>
 
-    <ProgressBar Margin="322,163,0,0" Foreground="#FF06B07A" Background="WhiteSmoke" HorizontalAlignment="Left" Width="160" Height="10" VerticalAlignment="Top"/>
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="322,231,0,0" VerticalAlignment="Top" Width="160" Foreground="#FFB07A06" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar21" Minimum="0" Maximum="1000" Margin="322,163,0,0" Foreground="#FF06B07A" Background="WhiteSmoke" HorizontalAlignment="Left" Width="160" Height="10" VerticalAlignment="Top"/>
+    <ProgressBar Name="Bar22" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="322,231,0,0" VerticalAlignment="Top" Width="160" Foreground="#FFB07A06" Background="WhiteSmoke"/>
 
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="533,162,0,0" VerticalAlignment="Top" Width="138" Foreground="#FF06B07A" Background="WhiteSmoke"/>
-    <ProgressBar HorizontalAlignment="Left" Height="10" Margin="533,231,0,0" VerticalAlignment="Top" Width="138" Foreground="#FFB07A06" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar31" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="533,162,0,0" VerticalAlignment="Top" Width="138" Foreground="#FF06B07A" Background="WhiteSmoke"/>
+    <ProgressBar Name="Bar32" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="533,231,0,0" VerticalAlignment="Top" Width="138" Foreground="#FFB07A06" Background="WhiteSmoke"/>
 
     <Button Content="Start" HorizontalAlignment="Left" Margin="354,285,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FF30C38E" Click="StartButton"/>
   </Grid>
