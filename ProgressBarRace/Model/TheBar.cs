@@ -11,6 +11,8 @@ namespace ProgressBarRace.Model {
     private ProgressBar _bar;
     private int _progress = 0;
     private Random _random;
+    int _minRandRange = 0;
+    int _maxRandRange = 50;
     public int Progress {
       get { return _progress; }
       set {
@@ -38,12 +40,7 @@ namespace ProgressBarRace.Model {
     }
 
     private int GetRandomNumber() {
-      int a = 0;
-      int b = 50;
-      if (Thread.CurrentThread.Name == "Team 2") {
-        b = 40;
-      }
-      return _random.Next(a, b);
+      return _random.Next(_minRandRange, _maxRandRange);
     }
 
     private void OnPropertyChanged(string propertyName) {

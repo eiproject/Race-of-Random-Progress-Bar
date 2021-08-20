@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -22,6 +23,7 @@ namespace ProgressBarRace {
   /// Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow : Window {
+    private bool _isWinnerAlreadyDecided = false;
     private TheBar _bar111;
     private TheBar _bar112;
     private TheBar _bar121;
@@ -40,14 +42,19 @@ namespace ProgressBarRace {
     private Thread _threadBar31;
     private Thread _threadBar32;
 
-    private Thread _firstRace;
-    private Thread _secondRace;
-    private Thread _finalRace;
+    private Thread _threadFirstRace;
+    private Thread _threadSecondRace;
+    private Thread _threadFinalRace;
+    private Thread _threadListenerFinalRace;
 
-    private Thread _firstRaceTeam1;
-    private Thread _firstRaceTeam2;
     private Thread _secondRaceTeam1;
     private Thread _secondRaceTeam2;
+
+    private Thread _threadFinalRaceTeam1;
+    private Thread _threadFinalRaceTeam2;
+
+    private Thread _threadListenerFinalRaceTeam1;
+    private Thread _threadListenerFinalRaceTeam2;
 
     public MainWindow() {
       InitializeComponent();
@@ -64,18 +71,24 @@ namespace ProgressBarRace {
     private void ResetButton(object sender, RoutedEventArgs e) {
       StartBtn.IsEnabled = true;
       StartBtn.Foreground = new SolidColorBrush(Colors.White);
+      MainWindow win2 = new MainWindow();
+      win2.Show();
+      Application.Current.MainWindow.Close();
+      this.Close();
     }
 
     private void InitializeBackendComponent() {
       InitProgressBar();
       InitThread();
       InitRaceRound();
+      InitRaceThread();
     }
 
     private void StartRace() {
-      _firstRace.Start();
-      _secondRace.Start();
-      _finalRace.Start();
+      _threadFirstRace.Start();
+      _threadSecondRace.Start();
+      _threadFinalRace.Start();
+      _threadListenerFinalRace.Start();
     }
 
     private void ResetRace() {
@@ -102,17 +115,22 @@ namespace ProgressBarRace {
       _threadBar22 = new Thread(() => _bar22.StartProgress());
       _threadBar31 = new Thread(() => _bar31.StartProgress());
       _threadBar32 = new Thread(() => _bar32.StartProgress());
-
-      _threadBar111.Name = "Team 1";
-      _threadBar112.Name = "Team 1";
-      _threadBar121.Name = "Team 2";
-      _threadBar122.Name = "Team 2";
     }
 
     private void InitRaceRound() {
-      _firstRace = new Thread(FirstRace);
-      _secondRace = new Thread(SecondRace);
-      _finalRace = new Thread(FinalRace);
+      _threadFirstRace = new Thread(FirstRace);
+      _threadSecondRace = new Thread(SecondRace);
+      _threadFinalRace = new Thread(FinalRace);
+      _threadListenerFinalRace = new Thread(ListenerFinalRace);
+    }
+
+    private void InitRaceThread() {
+      _secondRaceTeam1 = new Thread(SecondRaceTeam1);
+      _secondRaceTeam2 = new Thread(SecondRaceTeam2);
+      _threadFinalRaceTeam1 = new Thread(FinalRaceTeam1);
+      _threadFinalRaceTeam2 = new Thread(FinalRaceTeam2);
+      _threadListenerFinalRaceTeam1 = new Thread(ListenerFinalRaceTeam1);
+      _threadListenerFinalRaceTeam2 = new Thread(ListenerFinalRaceTeam2);
     }
 
     private void FirstRace() {
@@ -123,15 +141,18 @@ namespace ProgressBarRace {
     }
 
     private void SecondRace() {
-      _secondRaceTeam1 = new Thread(SecondRaceTeam1);
-      _secondRaceTeam2 = new Thread(SecondRaceTeam2);
       _secondRaceTeam1.Start();
       _secondRaceTeam2.Start();
     }
 
     private void FinalRace() {
-      new Thread(FinalRaceTeam1).Start();
-      new Thread(FinalRaceTeam2).Start();
+      _threadFinalRaceTeam1.Start();
+      _threadFinalRaceTeam2.Start();
+    }
+
+    private void ListenerFinalRace() {
+      _threadListenerFinalRaceTeam1.Start();
+      _threadListenerFinalRaceTeam2.Start();
     }
 
     private void SecondRaceTeam1() {
@@ -152,10 +173,47 @@ namespace ProgressBarRace {
       _threadBar31.Start();
 
     }
+
     private void FinalRaceTeam2() {
       _secondRaceTeam2.Join();
       _threadBar22.Join();
       _threadBar32.Start();
+    }
+
+    private void ListenerFinalRaceTeam1() {
+      _threadFinalRaceTeam1.Join();
+      _threadBar31.Join();
+      ChangeWinnerToTeam1();
+    }
+
+    private void ListenerFinalRaceTeam2() {
+      _threadFinalRaceTeam2.Join();
+      _threadBar32.Join();
+      ChangeWinnerToTeam2();
+    }
+
+    private void ChangeWinnerToTeam1() {
+      if (!_isWinnerAlreadyDecided) {
+        this.Dispatcher.Invoke((Action)(() => {
+          WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF06B07A"));
+          WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
+          WinnerBtn.Content = "Team 1 Win!";
+          WinnerBtn.IsEnabled = true;
+          _isWinnerAlreadyDecided = true;
+        }));
+      }
+    }
+
+    private void ChangeWinnerToTeam2() {
+      if (!_isWinnerAlreadyDecided) {
+        this.Dispatcher.Invoke((Action)(() => {
+          WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB07A06"));
+          WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
+          WinnerBtn.Content = "Team 2 Win!";
+          WinnerBtn.IsEnabled = true;
+          _isWinnerAlreadyDecided = true;
+        }));
+      }
     }
   }
 }
