@@ -23,7 +23,8 @@ namespace ProgressBarRace {
   /// Interaction logic for MainWindow.xaml
   /// </summary>
   public partial class MainWindow : Window {
-    private bool _isWinnerAlreadyDecided = false;
+    private static object _locker = new object();
+    private static bool _isWinnerAlreadyDecided = false;
     private TheBar _bar111;
     private TheBar _bar112;
     private TheBar _bar121;
@@ -115,6 +116,16 @@ namespace ProgressBarRace {
       _threadBar22 = new Thread(() => _bar22.StartProgress());
       _threadBar31 = new Thread(() => _bar31.StartProgress());
       _threadBar32 = new Thread(() => _bar32.StartProgress());
+      
+      _threadBar111.Name = "Team 1";
+      _threadBar112.Name = "Team 1";
+      _threadBar21.Name = "Team 1";
+      _threadBar31.Name = "Team 1";
+
+      _threadBar121.Name = "Team 2";
+      _threadBar122.Name = "Team 2";
+      _threadBar22.Name = "Team 2";
+      _threadBar32.Name = "Team 2";
     }
 
     private void InitRaceRound() {
@@ -183,36 +194,36 @@ namespace ProgressBarRace {
     private void ListenerFinalRaceTeam1() {
       _threadFinalRaceTeam1.Join();
       _threadBar31.Join();
-      ChangeWinnerToTeam1();
+      DecideWinner();
     }
 
     private void ListenerFinalRaceTeam2() {
       _threadFinalRaceTeam2.Join();
       _threadBar32.Join();
-      ChangeWinnerToTeam2();
+      DecideWinner();
     }
 
-    private void ChangeWinnerToTeam1() {
-      if (!_isWinnerAlreadyDecided) {
-        this.Dispatcher.Invoke((Action)(() => {
-          WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF06B07A"));
-          WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
-          WinnerBtn.Content = "Team 1 Win!";
-          WinnerBtn.IsEnabled = true;
+    private void DecideWinner() {
+      lock (_locker) {
+        if (!_isWinnerAlreadyDecided) {
           _isWinnerAlreadyDecided = true;
-        }));
-      }
-    }
-
-    private void ChangeWinnerToTeam2() {
-      if (!_isWinnerAlreadyDecided) {
-        this.Dispatcher.Invoke((Action)(() => {
-          WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB07A06"));
-          WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
-          WinnerBtn.Content = "Team 2 Win!";
-          WinnerBtn.IsEnabled = true;
-          _isWinnerAlreadyDecided = true;
-        }));
+          if (Thread.CurrentThread.Name == "Team 1") {
+            this.Dispatcher.Invoke((Action)(() => {
+              WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF06B07A"));
+              WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
+              WinnerBtn.Content = "Team 1 Win!";
+              WinnerBtn.IsEnabled = true;
+            }));
+          }
+          else {
+            this.Dispatcher.Invoke((Action)(() => {
+              WinnerBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFB07A06"));
+              WinnerBtn.Foreground = new SolidColorBrush(Colors.White);
+              WinnerBtn.Content = "Team 2 Win!";
+              WinnerBtn.IsEnabled = true;
+            }));
+          }
+        }
       }
     }
   }

@@ -22,7 +22,7 @@
 
     <Button Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="310,287,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FF30C38E" Click="StartButton"/>
     <Button Name="ResetBtn" Content="Reset" HorizontalAlignment="Left" Margin="405,287,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FFC33030" Click="ResetButton"/>
-    <Button Name="WinnerBtn" Content="Winner ...?" HorizontalAlignment="Left" Margin="628,179,0,0" VerticalAlignment="Top" Width="106" Height="28" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" FontStyle="Normal" FontWeight="Bold" Background="#FFE4E4E4" Foreground="#FFA6A6A6" IsEnabled="False"></Button>
+    <Button Name="WinnerBtn" Content="Winner ...?" HorizontalAlignment="Left" Margin="628,179,0,0" VerticalAlignment="Top" Width="106" Height="28" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" FontStyle="Normal" FontWeight="Bold" Background="#FFE4E4E4" Foreground="#FFA6A6A6" IsEnabled="False"/>
     <TextBlock HorizontalAlignment="Left" Margin="70,112,0,0" Text="Team 1" TextWrapping="Wrap" VerticalAlignment="Top"/>
     <TextBlock HorizontalAlignment="Left" Margin="70,194,0,0" Text="Team 2" TextWrapping="Wrap" VerticalAlignment="Top"/>
   </Grid>
