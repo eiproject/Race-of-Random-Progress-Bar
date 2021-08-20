@@ -20,6 +20,7 @@
     <ProgressBar Name="Bar31" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="533,162,0,0" VerticalAlignment="Top" Width="138" Foreground="#FF06B07A" Background="WhiteSmoke"/>
     <ProgressBar Name="Bar32" Minimum="0" Maximum="1000" HorizontalAlignment="Left" Height="10" Margin="533,231,0,0" VerticalAlignment="Top" Width="138" Foreground="#FFB07A06" Background="WhiteSmoke"/>
 
-    <Button Content="Start" HorizontalAlignment="Left" Margin="354,285,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FF30C38E" Click="StartButton"/>
+    <Button Name="StartBtn" Content="Start" HorizontalAlignment="Left" Margin="310,287,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FF30C38E" Click="StartButton"/>
+    <Button Name="ResetBtn" Content="Reset" HorizontalAlignment="Left" Margin="405,287,0,0" VerticalAlignment="Top" Width="90" Height="29" BorderBrush="{x:Null}" Foreground="White" Background="#FFC33030" Click="ResetButton"/>
   </Grid>
 </Window>

@@ -9,7 +9,7 @@ using System.Windows.Threading;
 namespace ProgressBarRace.Model {
   public class TheBar : INotifyPropertyChanged {
     private ProgressBar _bar;
-    private int _progress;
+    private int _progress = 0;
     private Random _random;
     public int Progress {
       get { return _progress; }
@@ -25,16 +25,25 @@ namespace ProgressBarRace.Model {
     }
 
     internal void StartProgress() {
-      int i = 0;
-      while (i <= 1000) {
-        _bar.Dispatcher.Invoke(() => _bar.Value = i, DispatcherPriority.Background);
-        i += GetRandomNumber();
+      // _progress = 0;
+      while (_progress <= 1000) {
+        _progress += GetRandomNumber();
+        _bar.Dispatcher.Invoke(() => _bar.Value = _progress, DispatcherPriority.Background);
         Thread.Sleep(100);
       }
     }
 
+    internal void Reset() {
+      _progress = 0;
+    }
+
     private int GetRandomNumber() {
-      return _random.Next(0, 30);
+      int a = 0;
+      int b = 50;
+      if (Thread.CurrentThread.Name == "Team 2") {
+        b = 40;
+      }
+      return _random.Next(a, b);
     }
 
     private void OnPropertyChanged(string propertyName) {
